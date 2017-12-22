@@ -1,9 +1,8 @@
 function output_density = density_solver(mode,N,X,Y,dX,dY,h,BoundaryCondition)
 %UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+%  this function return density function values on points (X,Y)
 
-
-if(mode==0) % using curvature as limit of singularity
+if(mode==0) % use curvature as limit of singularity
 sample_weight = ones(1,N)*h;
 
 weight_matrix = zeros(N,N);
@@ -14,7 +13,7 @@ for i=1:N
    weight_matrix(i,:) = circshift(sample_weight,i-1).*greenDD;
 end
     
-else   %% KR quadrature rule 
+else   %% use KR quadrature rule 
 sample_acc = 2;
 weight_corrected =  [1.825748 -1.325748];
 

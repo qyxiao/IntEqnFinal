@@ -3,7 +3,7 @@
 
 clear all; clc
 
-nums = [20, 40, 80, 160];
+nums = [ 15, 20, 25, 30, 40, 50];
 maxSet = zeros(1,length(nums));
 
 for j = 0:1
@@ -34,9 +34,19 @@ maxSet(i) = max(abs(b-expected));
 
 end
 
-figure(1);hold on; loglog(2*pi./nums,maxSet);
+figure(1);hold on; loglog(nums,maxSet);
 end
 legend('curvature limit','KR quadrature rule')
+ylabel('error');xlabel('number of boundary points')
+saveas(figure(1),'accuracy.png')
 
-
-
+%%% code below plot the solution
+n = 60; 
+[i,j] = meshgrid(-n:n,-n:n);
+test_x = i/(1.2*n); test_y = j/(1.1*n);
+values = point_solver( density, test_x(:), test_y(:), X, Y, dX, dY, h);
+expected = -1/(2*pi)*log(sqrt((test_x(:)-p0_x).^2+(test_y(:)-p0_y).^2));
+diff = vec2mat(log(abs(values-expected')),size(test_x,1));
+figure(2);pcolor(test_x,test_y,diff);shading flat;colorbar;
+title('log error plot for KR quadrature rule solution')
+saveas(figure(2),'solution.png')
