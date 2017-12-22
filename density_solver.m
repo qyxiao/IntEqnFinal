@@ -3,13 +3,6 @@ function output_density = density_solver(mode,N,X,Y,dX,dY,h,BoundaryCondition)
 %   Detailed explanation goes here
 
 
-% weight for KR quadrature rule
-weight1 = [1.825748 -1.325748];
-weight2 = [4.967362 -1.6205015 2.585153 -2.222599 9.930104 -1.817995];
-weight3 = [7.832432 -4.5651617 1.452168 -2.901348 3.870862 -3.523821 2.172421 -8.707796 2.053584 -2.166984];
-
-
-
 if(mode==0) % using curvature as limit of singularity
 sample_weight = ones(1,N)*h;
 
@@ -21,19 +14,9 @@ for i=1:N
    weight_matrix(i,:) = circshift(sample_weight,i-1).*greenDD;
 end
     
-else    
-if(mode==1)
+else   %% KR quadrature rule 
 sample_acc = 2;
-weight_corrected = weight1;
-end
-if(mode==2)
-sample_acc = 6;
-weight_corrected = weight2;
-end
-if(mode==3)
-sample_acc = 10;
-weight_corrected = weight3;
-end
+weight_corrected =  [1.825748 -1.325748];
 
 sample_weight = ones(1,N); 
 sample_weight(1) = 0;

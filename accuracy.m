@@ -6,6 +6,7 @@ clear all; clc
 nums = [20, 40, 80, 160];
 maxSet = zeros(1,length(nums));
 
+for j = 0:1
 for i = 1:length(nums)
 
 N = nums(i); %% number of points taken on boundary 
@@ -19,7 +20,7 @@ N = nums(i); %% number of points taken on boundary
 p0_x = 20; p0_y = 0;
 
 %%% solving the density equation on boundary points 
-density = density_solver(3,N,X,Y,dX,dY,h,greens(X,Y,0,p0_x,p0_y)');
+density = density_solver(j,N,X,Y,dX,dY,h,greens(X,Y,0,p0_x,p0_y)');
 
 
 %%% points used for accuracy test
@@ -34,3 +35,8 @@ maxSet(i) = max(abs(b-expected));
 end
 
 figure(1);hold on; loglog(2*pi./nums,maxSet);
+end
+legend('curvature limit','KR quadrature rule')
+
+
+
