@@ -1,4 +1,4 @@
-function output_density = solver( mode,N,X,Y,dX,dY,h,BoundaryCondition)
+function output_density = density_solver(mode,N,X,Y,dX,dY,h,BoundaryCondition)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -37,8 +37,8 @@ end
 
 sample_weight = ones(1,N); 
 sample_weight(1) = 0;
-sample_weight(2:2+sample_acc-1) = sample_weight(2:2+sample_acc-1) + weight1;
-sample_weight(N-sample_acc+1:N) = sample_weight(N-sample_acc+1:N) + fliplr(weight1);
+sample_weight(2:2+sample_acc-1) = sample_weight(2:2+sample_acc-1) + weight_corrected;
+sample_weight(N-sample_acc+1:N) = sample_weight(N-sample_acc+1:N) + fliplr(weight_corrected);
 sample_weight = h*sample_weight;
 
 
@@ -53,3 +53,4 @@ end
 
 LHS =  -eye(N,N)/2 - weight_matrix ;
 output_density = LHS\BoundaryCondition;
+
